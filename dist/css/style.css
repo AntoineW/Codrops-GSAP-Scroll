@@ -1,0 +1,28 @@
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
+html{margin:0;padding:0;width:100%;height:100%;overscroll-behavior-y:none;scrollbar-width:thin;scrollbar-color:#fffbf0 rgba(0,0,0,0)}html::-webkit-scrollbar{width:8px;height:8px}html::-webkit-scrollbar-track,html::-webkit-scrollbar-corner{background:rgba(0,0,0,0)}html::-webkit-scrollbar-thumb{background:#fffbf0}html::-webkit-scrollbar-button{display:none}body{margin:0;padding:0;width:100%;height:100%;background:#150022;color:#fffbf0;font:700 1rem/1 sans-serif}.frame{position:absolute;inset:0 0 auto;z-index:10;display:grid;grid-template-columns:1fr auto;gap:.75rem 1.5rem;padding:1.5rem;pointer-events:none;font:400 12px/1.4 monospace}@media(max-width: 600px){.frame{grid-template-columns:1fr;gap:.5rem;padding:1rem}}.frame__title{margin:0;font:inherit}.frame__links{display:flex;flex-wrap:wrap;gap:.5rem .5rem}.frame a{color:inherit;text-decoration:none;pointer-events:auto}.frame a:hover{text-decoration:underline}.frame a:focus-visible{outline:2px solid currentColor;outline-offset:4px}.frame [aria-disabled=true]{opacity:.5}.loader{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:#150022;font:400 12px/1.4 monospace;letter-spacing:.2em;text-transform:uppercase}.js body.loading{overflow:hidden}.js body.loading .loader{display:grid}.no-js .step-inner{position:relative;top:0}.page-container{overflow:hidden}.step{position:relative;z-index:2;width:100%;height:200lvh;text-align:center;text-transform:uppercase;user-select:none;pointer-events:none}.step-inner{position:fixed;top:calc(50lvh - 50svh);left:0;display:flex;align-items:center;justify-content:center;width:100%;height:100svh}.step-text{display:block}.step-text .char{position:relative;display:inline-block;color:rgba(0,0,0,0);will-change:transform}.step--intro{height:100lvh;font-family:monospace;font-size:12px;font-weight:400;letter-spacing:.2em}.step--intro .step-text{height:24px;overflow:hidden;line-height:26px}.is-android .step--intro .step-text{line-height:20px}.step--intro .char{color:inherit}.step--text{font-size:16vw;letter-spacing:-0.04em;line-height:.78;white-space:nowrap}@media(max-width: 600px){.step--text{font-size:22vw}}.step--text .char__ghost{position:absolute;left:0;transform-origin:var(--transform-origin-x, 50%) 50%;will-change:transform}.step--text .char__ghost:before{content:attr(data-char)}.step--text .char__ghost:nth-child(1){z-index:5;color:#fffbf0}.step--text .char__ghost:nth-child(2){z-index:4;color:#ffbd00}.step--text .char__ghost:nth-child(3){z-index:3;color:#ff5400}.step--text .char__ghost:nth-child(4){z-index:2;color:#ff0054}.step--text .char__ghost:nth-child(5){z-index:1;color:#9e0059}.step--text .char__ghost:nth-child(6){z-index:0;color:#3e0074}.step--3 .step-inner{overflow:hidden;pointer-events:none}.step--3 .step-text{position:relative;z-index:0}.step-throws__letter{position:absolute;z-index:1;display:block;color:rgba(0,0,0,0);pointer-events:none}.step.is-active{pointer-events:auto}@media(prefers-reduced-motion: reduce){.step{height:100svh}.step-inner{position:relative;top:0}.step-text .char{color:inherit;transform:none !important;will-change:auto}.step .char__ghosts,.step .step-throws__letter{display:none}}.grid{position:fixed;inset:0;z-index:1;display:block;width:100%;height:100%;pointer-events:none}.signature{position:absolute;bottom:1rem;right:1rem;color:#fffbf0;font:400 12px/1.4 monospace;letter-spacing:0;text-align:right;text-transform:none}.signature a{color:inherit;text-decoration:none;pointer-events:auto}.signature a:before{position:absolute;inset:0;content:""}.signature a:hover{text-decoration:underline}

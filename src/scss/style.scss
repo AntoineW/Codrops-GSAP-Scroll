@@ -1,0 +1,321 @@
+@use 'sass:list';
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  overscroll-behavior-y: none;
+
+  scrollbar-width: thin;
+  scrollbar-color: #fffbf0 transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #fffbf0;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  background: #150022;
+
+  color: #fffbf0;
+  font: 700 1rem / 1 sans-serif;
+}
+
+.frame {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1.5rem;
+  padding: 1.5rem;
+
+  pointer-events: none;
+  font: 400 12px / 1.4 monospace;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  &__title {
+    margin: 0;
+    font: inherit;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.5rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    pointer-events: auto;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
+  }
+
+  [aria-disabled='true'] {
+    opacity: 0.5;
+  }
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+
+  display: none;
+  place-items: center;
+
+  background: #150022;
+  font: 400 12px / 1.4 monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.js body.loading {
+  overflow: hidden;
+
+  .loader {
+    display: grid;
+  }
+
+}
+
+.no-js .step-inner {
+  position: relative;
+  top: 0;
+}
+
+.page-container {
+  overflow: hidden;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 200lvh;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  user-select: none;
+  pointer-events: none;
+
+  &-inner {
+    // Sections provide scroll distance; their words animate inside a fixed viewport.
+    position: fixed;
+    top: calc(50lvh - 50svh);
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100svh;
+  }
+
+  &-text {
+    display: block;
+
+    .char {
+      position: relative;
+
+      display: inline-block;
+
+      // Keep the original glyph's dimensions; the ghost layers supply the visible color.
+      color: transparent;
+
+      will-change: transform;
+    }
+  }
+
+  &--intro {
+    height: 100lvh;
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+
+    .step-text {
+      height: 24px;
+
+      overflow: hidden;
+
+      line-height: 26px;
+
+      // Fix line height variation differences across platforms.
+      @at-root .is-android & {
+        line-height: 20px;
+      }
+    }
+
+    .char {
+      color: inherit;
+    }
+  }
+
+  &--text {
+    font-size: 16vw;
+    letter-spacing: -0.04em;
+    line-height: 0.78;
+    white-space: nowrap;
+
+    @media (max-width: 600px) {
+      font-size: 22vw;
+    }
+
+    .char {
+      &__ghost {
+        position: absolute;
+        left: 0;
+
+        transform-origin: var(--transform-origin-x, 50%) 50%;
+        will-change: transform;
+
+        &:before {
+          content: attr(data-char);
+        }
+
+        // First layer is the front face. The remaining layers form the colored trail.
+        // Keep this palette in sync with settings.ghostCount in script.js.
+        $colors: #fffbf0, #ffbd00, #ff5400, #ff0054, #9e0059, #3e0074;
+
+        @for $i from 1 through 6 {
+          &:nth-child(#{$i}) {
+            z-index: 6 - $i;
+
+            color: list.nth($colors, $i);
+          }
+        }
+      }
+    }
+  }
+
+  &--3 {
+    .step-inner {
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .step-text {
+      position: relative;
+      // Contain the source characters' z-indexes so thrown copies always render in front.
+      z-index: 0;
+    }
+  }
+
+  &-throws__letter {
+    position: absolute;
+    z-index: 1;
+
+    display: block;
+
+    color: transparent;
+    pointer-events: none;
+  }
+
+  &.is-active {
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    height: 100svh;
+
+    &-inner {
+      position: relative;
+      top: 0;
+    }
+
+    &-text .char {
+      color: inherit;
+      transform: none !important;
+      will-change: auto;
+    }
+
+    .char__ghosts,
+    .step-throws__letter {
+      display: none;
+    }
+  }
+}
+
+.grid {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.signature {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+  color: #fffbf0;
+  font: 400 12px / 1.4 monospace;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: none;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    pointer-events: auto;
+
+    &:before {
+      position: absolute;
+      inset: 0;
+
+      content: '';
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

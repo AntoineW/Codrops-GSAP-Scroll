@@ -1,0 +1,160 @@
+@use 'sass:list';
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  scrollbar-width: thin;
+  scrollbar-color: #3e0074 transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #3e0074;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  background: #150022;
+
+  color: #fffbf0;
+  font: 700 1rem / 1 sans-serif;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 200lvh;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  &-inner {
+    position: fixed;
+    top: calc(50lvh - 50svh);
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100svh;
+  }
+
+  &-text {
+    display: block;
+
+    .char {
+      position: relative;
+
+      display: inline-block;
+
+      color: transparent;
+
+      will-change: transform;
+    }
+  }
+
+  &--intro {
+    height: 100lvh;
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+
+    .step-text {
+      height: 24px;
+
+      overflow: hidden;
+
+      line-height: 24px;
+    }
+
+    .char {
+      color: inherit;
+    }
+  }
+
+  &--text {
+    font-size: 16vw;
+    letter-spacing: -0.06em;
+    line-height: 0.78;
+    white-space: nowrap;
+
+    .char {
+      &__ghost {
+        position: absolute;
+        left: 0;
+
+        transform-origin: var(--transform-origin-x, 50%) 50%;
+        will-change: transform;
+
+        &:before {
+          content: attr(data-char);
+        }
+
+        $colors: #fffbf0, #ffbd00, #ff5400, #ff0054, #9e0059, #3e0074;
+
+        @for $i from 1 through 6 {
+          &:nth-child(#{$i}) {
+            // top: 0.05em * ($i - 1);
+            z-index: 6 - $i;
+
+            color: list.nth($colors, $i);
+          }
+        }
+      }
+    }
+  }
+
+  &--3 {
+    height: 300lvh;
+
+    .step-inner {
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .step-text {
+      position: absolute;
+
+      .char {
+        will-change: auto;
+      }
+    }
+  }
+}
+
+.grid {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
